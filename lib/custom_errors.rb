@@ -1,13 +1,33 @@
 class Person
   attr_accessor :partner, :name
 
-  def initialize(name)
+  def initialize name
     @name = name
   end
 
-  def get_married(person)
-    self.partner = person
-    person.partner = self
+  def get_married person
+
+    if person.is_a?(Person) # Essentially saying if the argument person is an instance of the Person class
+        self.partner = person
+        person.partner = self
+
+    else
+      
+      begin
+        raise PartnerError
+      rescue PartnerError => error
+        puts error.message
+      end
+
+    end
+
+  end
+
+  class PartnerError < StandardError
+      def message
+        "you must give the get_married method an argument of an instance of the person class!"
+      end
+
   end
 
 end
